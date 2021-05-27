@@ -9,6 +9,7 @@ import (
 	"github.com/xivapi/godestone/v2"
 )
 
+// SearchCharacter searches a character by name and returns a list of results.
 func SearchCharacter(w http.ResponseWriter, r *http.Request) {
 	name := r.URL.Query().Get("name")
 	server := r.URL.Query().Get("server")

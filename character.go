@@ -7,6 +7,7 @@ import (
 	"net/http"
 )
 
+// GetCharacter fetches a Character by ID.
 func GetCharacter(w http.ResponseWriter, r *http.Request) {
 	id := r.URL.Query().Get("id")
 	if id == "" {
