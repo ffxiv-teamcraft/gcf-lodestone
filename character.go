@@ -9,11 +9,10 @@ import (
 )
 
 func Character(w http.ResponseWriter, r *http.Request) {
-
 	id, err := strconv.ParseUint(r.URL.Query().Get("id"), 10, 32)
 	if err != nil {
-		log.Fatalln(err)
 		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
+		log.Fatalln(err)
 	}
 
 	c, err := scraper.FetchCharacter(uint32(id))
@@ -24,6 +23,7 @@ func Character(w http.ResponseWriter, r *http.Request) {
 
 	cJSON, err := json.Marshal(c)
 	if err != nil {
+		http.Error(w, http.StatusText(StatusInternalServerError), StatusInternalServerError)
 		log.Fatalln(err)
 	}
 
