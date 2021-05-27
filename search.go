@@ -9,7 +9,7 @@ import (
 	"github.com/xivapi/godestone/v2"
 )
 
-func LodestoneCharacterSearch(w http.ResponseWriter, r *http.Request) {
+func SearchCharacter(w http.ResponseWriter, r *http.Request) {
 
 	name := r.URL.Query().Get("name")
 	server := r.URL.Query().Get("server")

@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-func LodestoneCharacter(w http.ResponseWriter, r *http.Request) {
+func Character(w http.ResponseWriter, r *http.Request) {
 
 	id, err := strconv.ParseUint(r.URL.Query().Get("id"), 10, 32)
 	if err != nil {
