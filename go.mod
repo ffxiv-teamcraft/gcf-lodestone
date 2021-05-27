@@ -1,4 +1,4 @@
-module github.com/ffxivteamcraft/GCFLodestone
+module github.com/ffxiv-teamcraft/gcf-lodestone
 
 go 1.13
 
