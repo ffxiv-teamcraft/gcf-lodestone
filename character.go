@@ -9,7 +9,7 @@ import (
 
 func Character(w http.ResponseWriter, r *http.Request) {
 	id := r.URL.Query().Get("id")
-	if id = "" {
+	if id == "" {
 		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
 		log.Fatalln(err)
 	}
