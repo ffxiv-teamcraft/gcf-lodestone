@@ -22,14 +22,14 @@ func LodestoneCharacterSearch(w http.ResponseWriter, r *http.Request) {
         World: server,
     }
 
-    var characters []*godestone.CharacterSearchResult
+    var characters []godestone.CharacterSearchResult
 
     for character := range scraper.SearchCharacters(opts) {
         if character.Error != nil {
             log.Fatalln(character.Error)
         }
 
-        characters = append(characters, character)
+        characters = append(characters, *character)
     }
 
 	cJSON, err := json.Marshal(characters)
