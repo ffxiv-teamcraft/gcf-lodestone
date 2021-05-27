@@ -24,7 +24,7 @@ func GetCharacter(w http.ResponseWriter, r *http.Request) {
 
 	cJSON, err := json.Marshal(c)
 	if err != nil {
-		http.Error(w, http.StatusText(StatusInternalServerError), StatusInternalServerError)
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		log.Fatalln(err)
 	}
 
