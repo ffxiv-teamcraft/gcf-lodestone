@@ -10,13 +10,19 @@ import (
 
 // GetCharacter fetches a Character by ID.
 func GetCharacter(w http.ResponseWriter, r *http.Request) {
-	id, err := strconv.ParseUint(r.URL.Query().Get("id"), 10, 32)
+	id := r.URL.Query().Get("id")
+	if id == "" {
+		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
+		log.Fatalln("Missing ID parameter")
+	}
+
+	uid, err := strconv.ParseUint(id, 10, 32)
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
 		log.Fatalln(err)
 	}
 
-	c, err := scraper.FetchCharacter(uint32(id))
+	c, err := scraper.FetchCharacter(uint32(uid))
 	if err != nil {
 		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
 		log.Fatalln(err)
