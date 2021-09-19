@@ -2,40 +2,40 @@ package lodestone
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
-	"net/http"
+    "net/http"
+    "fmt"
 
 	"github.com/xivapi/godestone/v2"
 )
 
 // SearchCharacter searches a character by name and returns a list of results.
-func SearchCharacter(w http.ResponseWriter, r *http.Request) {
+func LodestoneCharacterSearch(w http.ResponseWriter, r *http.Request) {
+    // Comment this to disable CORS
+    w.Header().Set("Access-Control-Allow-Origin", "*")
+    if r.Method == http.MethodOptions {
+        w.Header().Set("Access-Control-Allow-Methods", "GET")
+        w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+        w.Header().Set("Access-Control-Max-Age", "3600")
+        w.WriteHeader(http.StatusNoContent)
+        return
+    }
+
 	name := r.URL.Query().Get("name")
 	server := r.URL.Query().Get("server")
 	if name == "" || server == "" {
-		http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
+    	http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
 	}
 
-	opts := godestone.CharacterOptions{
-		Name:  name,
-		World: server,
-	}
+    opts := godestone.CharacterOptions{
+        Name:  name,
+        World: server,
+    }
 
-	var characters []godestone.CharacterSearchResult
-
-	for character := range scraper.SearchCharacters(opts) {
-		if character.Error != nil {
-			http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
-			log.Fatalln(character.Error)
-		}
-
-		characters = append(characters, *character)
-	}
+    characters := scraper.SearchCharacters(opts)
 
 	cJSON, err := json.Marshal(characters)
 	if err != nil {
-		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		log.Fatalln(err)
 	}
 
